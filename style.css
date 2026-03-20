@@ -1,0 +1,62 @@
+body {
+    background: linear-gradient(135deg, #1e1e1e, #3a3a3a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+    overflow: hidden; /* Ensure no scrollbars */
+}
+
+canvas {
+    background: #000;
+    display: block;
+    border: 2px solid #fff;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    width: 100vw; /* Full width */
+    height: 100vh; /* Full height */
+}
+
+button {
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    border: none;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(255, 126, 95, 0.8);
+}
+
+select {
+    background: #444;
+    color: #fff;
+    border: 1px solid #666;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+select:hover {
+    border-color: #fff;
+}
+
+#pongCanvas {
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+    to {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    }
+}
