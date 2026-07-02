@@ -5,33 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pong Game with AI</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Press Start 2P', cursive;
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="controls" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); text-align: center;">
-        <label for="playerName">Your Name: </label>
-        <input type="text" id="playerName" placeholder="Enter your name" style="margin-right: 10px;">
-        <label for="aiSkill">AI Skill Level: </label>
-        <select id="aiSkill">
-            <option value="0.4">Easy</option>
-            <option value="0.7" selected>Medium</option>
-            <option value="1">Hard</option>
-        </select>
-        <button id="startBtn" style="margin-left:20px;">Start Game</button>
-        <button id="fullscreenBtn" style="margin-left:20px;">Fullscreen</button>
-        <button id="changeBgBtn" style="margin-left:20px;">Change Background</button>
-        <select id="bgOptions" style="display: none; margin-left: 10px;">
-            <option value="gradient">Gradient</option>
-            <option value="space">Space</option>
-            <option value="forest">Forest</option>
-        </select>
+    <div id="gameContainer">
+        <header id="gameHeader">
+            <h1 class="title">PONG</h1>
+            <p class="subtitle">Human vs AI</p>
+        </header>
+
+        <div id="controls">
+            <div class="control-group">
+                <label for="playerName">Player</label>
+                <input type="text" id="playerName" placeholder="Enter your name">
+            </div>
+
+            <div class="control-group">
+                <label for="aiSkill">Difficulty</label>
+                <select id="aiSkill">
+                    <option value="0.4">Easy</option>
+                    <option value="0.7" selected>Medium</option>
+                    <option value="1">Hard</option>
+                </select>
+            </div>
+
+            <div class="control-group buttons">
+                <button id="startBtn">&#9658; Start</button>
+                <button id="muteBtn" aria-pressed="false">&#128266; Sound</button>
+                <button id="fullscreenBtn">&#9974; Fullscreen</button>
+                <button id="changeBgBtn">&#127912; Background</button>
+                <select id="bgOptions" class="hidden">
+                    <option value="gradient">Gradient</option>
+                    <option value="space">Space</option>
+                    <option value="forest">Forest</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="canvasWrapper">
+            <canvas id="pongCanvas" width="800" height="600"></canvas>
+            <div id="overlay" class="hidden">
+                <div id="overlayContent">
+                    <h2 id="overlayTitle"></h2>
+                    <p id="overlayText"></p>
+                </div>
+            </div>
+        </div>
     </div>
-    <canvas id="pongCanvas" width="800" height="600"></canvas>
+
+    <script src="sounds.js"></script>
     <script src="game.js"></script>
 </body>
 </html>
