@@ -1,62 +1,241 @@
+:root {
+    --neon-cyan: #4dd8ff;
+    --neon-magenta: #ff4dd8;
+    --neon-amber: #ffb347;
+    --bg-dark: #0a0a12;
+    --panel-bg: rgba(20, 20, 32, 0.75);
+    --panel-border: rgba(77, 216, 255, 0.25);
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    background: linear-gradient(135deg, #1e1e1e, #3a3a3a);
+    background: radial-gradient(circle at 50% 20%, #1a1a2e 0%, #0a0a12 70%);
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Orbitron', 'Arial', sans-serif;
     color: #fff;
-    overflow: hidden; /* Ensure no scrollbars */
+    overflow: hidden;
 }
 
-canvas {
-    background: #000;
-    display: block;
-    border: 2px solid #fff;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-    width: 100vw; /* Full width */
-    height: 100vh; /* Full height */
+#gameContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 20px;
+    width: 100%;
+    height: 100vh;
+}
+
+#gameHeader {
+    text-align: center;
+}
+
+.title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 32px;
+    margin: 0;
+    letter-spacing: 6px;
+    color: #fff;
+    text-shadow:
+        0 0 8px var(--neon-cyan),
+        0 0 20px var(--neon-cyan),
+        0 0 40px var(--neon-magenta);
+    animation: titleFlicker 4s ease-in-out infinite;
+}
+
+.subtitle {
+    margin: 6px 0 0;
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: var(--neon-cyan);
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+@keyframes titleFlicker {
+    0%, 96%, 100% { opacity: 1; }
+    97% { opacity: 0.7; }
+    98% { opacity: 1; }
+}
+
+#controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 18px;
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+    padding: 14px 22px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 0 20px rgba(77, 216, 255, 0.12), inset 0 0 30px rgba(0, 0, 0, 0.4);
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.control-group.buttons {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+label {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #9fb3c8;
+}
+
+input,
+select {
+    background: #161622;
+    color: #fff;
+    border: 1px solid #333a4d;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: 'Orbitron', sans-serif;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 8px rgba(77, 216, 255, 0.5);
+}
+
+select:hover,
+input:hover {
+    border-color: #555f7a;
 }
 
 button {
     background: linear-gradient(135deg, #ff7e5f, #feb47b);
     border: none;
-    padding: 10px 20px;
-    color: #fff;
-    font-size: 16px;
-    border-radius: 5px;
+    padding: 10px 16px;
+    color: #1a1a1a;
+    font-weight: 700;
+    font-size: 12px;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 0.5px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 button:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 15px rgba(255, 126, 95, 0.8);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 18px rgba(255, 126, 95, 0.6);
 }
 
-select {
-    background: #444;
+button:active {
+    transform: translateY(0) scale(0.98);
+}
+
+button#muteBtn {
+    background: linear-gradient(135deg, var(--neon-cyan), #1b6fa8);
     color: #fff;
-    border: 1px solid #666;
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 16px;
 }
 
-select:hover {
-    border-color: #fff;
+button#muteBtn[aria-pressed="true"] {
+    background: linear-gradient(135deg, #555, #333);
+    color: #aaa;
 }
 
-#pongCanvas {
-    animation: glow 1.5s infinite alternate;
+#canvasWrapper {
+    position: relative;
+    line-height: 0;
+}
+
+canvas {
+    background: #000;
+    display: block;
+    border: 2px solid var(--neon-cyan);
+    border-radius: 4px;
+    box-shadow:
+        0 0 20px rgba(77, 216, 255, 0.5),
+        0 0 60px rgba(77, 216, 255, 0.15),
+        inset 0 0 40px rgba(0, 0, 0, 0.6);
+    max-width: 88vw;
+    max-height: 76vh;
+    animation: glow 2.4s ease-in-out infinite alternate;
 }
 
 @keyframes glow {
     from {
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        box-shadow:
+            0 0 14px rgba(77, 216, 255, 0.4),
+            0 0 40px rgba(77, 216, 255, 0.12),
+            inset 0 0 40px rgba(0, 0, 0, 0.6);
     }
     to {
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        box-shadow:
+            0 0 26px rgba(77, 216, 255, 0.7),
+            0 0 70px rgba(77, 216, 255, 0.25),
+            inset 0 0 40px rgba(0, 0, 0, 0.6);
     }
+}
+
+#overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(5, 5, 12, 0.72);
+    border-radius: 4px;
+    backdrop-filter: blur(2px);
+    animation: fadeIn 0.25s ease-out;
+}
+
+#overlay.hidden {
+    display: none;
+}
+
+#overlayContent {
+    text-align: center;
+    padding: 24px 40px;
+}
+
+#overlayTitle {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 32px;
+    margin: 0 0 24px;
+    color: #fff;
+    text-shadow: 0 0 10px var(--neon-cyan), 0 0 30px var(--neon-magenta);
+    animation: pulseScale 0.6s ease-in-out infinite alternate;
+}
+
+#overlayText {
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: #cfe4f5;
+    margin: 0;
+}
+
+@keyframes pulseScale {
+    from { transform: scale(1); }
+    to { transform: scale(1.04); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.hidden {
+    display: none !important;
 }
